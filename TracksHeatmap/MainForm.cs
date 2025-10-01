@@ -1,25 +1,10 @@
 ﻿using Geo.Geodesy;
 using Geo.Gps;
-using Geo.Gps.Metadata;
-using Geo.Gps.Serialization;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
-using GMap.NET.WindowsForms.Markers;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Configuration;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace TracksHeatmap
 {
@@ -40,10 +25,10 @@ namespace TracksHeatmap
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             // Get the appSettings section.
-            AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("System.Windows.Forms.ApplicationConfigurationSection");
-            var dpiAware = appSettings.Settings["DpiAwareness"].Value;
+            //AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("System.Windows.Forms.ApplicationSettingsSection");
+            //var dpiAware = appSettings.Settings["DpiAwareness"].Value;
 
-            lblDpiAware.Text = "Dpi awareness: " + dpiAware;
+            //lblDpiAware.Text = "Dpi awareness: " + dpiAware;
 
             //appSettings.Settings["DpiAwareness"].Value = "PerMonitorV2";
             //appSettings.Settings["DpiAwareness"].Value = "unaware";
@@ -108,7 +93,7 @@ namespace TracksHeatmap
             chkAsVisible.Checked = true;
             menuTrackName.Visible = false;
 
-            cmbMapType.SelectedIndex = mapTypes.IndexOf(GMapProviders.CzechMap);
+            cmbMapType.SelectedIndex = mapTypes.IndexOf(GMapProviders.OpenStreetMap);
 
             gMap.DragButton = MouseButtons.Left;
             gMap.Position = new PointLatLng(50.059721, 22.4930113);
@@ -407,14 +392,14 @@ namespace TracksHeatmap
 
                 foreach (var track in this.Tracks)
                 {
-                    file.Write("<trk><name>" + track.GetFirstFix().TimeUtc.ToString("yyyy-MM-dd") + " " + track.Metadata["name"] + "</name>" + lineBreak);
+                    file.Write("<trk><name>" + track.GetFirstWaypoint().TimeUtc.Value.ToString("yyyy-MM-dd") + " " + track.Metadata["name"] + "</name>" + lineBreak);
 
                     foreach (var segment in track.Segments)
                     {
                         file.Write("<trkseg>" + lineBreak);
 
-                        Geo.Gps.Fix lastPoint = null;
-                        foreach (var point in segment.Fixes)
+                        Geo.Gps.Waypoint lastPoint = null;
+                        foreach (var point in segment.Waypoints)
                         {
                             if (lastPoint != null && Math.Abs(spheroidCalculator.CalculateLength(new Geo.CoordinateSequence(lastPoint.Coordinate, point.Coordinate)).SiValue) < 200)
                             {
@@ -422,7 +407,7 @@ namespace TracksHeatmap
                             }
 
                             file.Write("<trkpt lat=\"" + point.Coordinate.Latitude.ToString("F6") + "\" lon=\"" + point.Coordinate.Longitude.ToString("F6") + "\">" + lineBreak);
-                            file.Write("<time>" + point.TimeUtc.ToString("yyyy-MM-ddTHH:mm:ssZ") + "</time>" + lineBreak);
+                            file.Write("<time>" + point.TimeUtc.Value.ToString("yyyy-MM-ddTHH:mm:ssZ") + "</time>" + lineBreak);
                             file.Write("</trkpt>" + lineBreak);
                             lastPoint = point;
                         }
@@ -459,7 +444,7 @@ namespace TracksHeatmap
         {
             btnAnimateSingle.Enabled = false;
             this.tracksAnimator = new TracksAnimator(GetTrackOptions());
-            List<Fix> fixes = tracksAnimator.InitAnimation(this.gMap, this.Tracks, Convert.ToInt32(this.upDownAnimationStep.Value), chkAnimationDrawMarkers.Checked, chkIncreasePointsDensity.Checked);
+            List<Waypoint> fixes = tracksAnimator.InitAnimation(this.gMap, this.Tracks, Convert.ToInt32(this.upDownAnimationStep.Value), chkAnimationDrawMarkers.Checked, chkIncreasePointsDensity.Checked);
 
             timerAnimation.Enabled = true;
         }

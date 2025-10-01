@@ -19,7 +19,6 @@ namespace TracksHeatmap
         private Geo.Gps.Track track;
         private string outImagesFolder;
         private int imageStep = 0;
-        private Geo.Gps.Fix lastPoint = null;
         private PointLatLng lastPointLatLng = PointLatLng.Empty;
         private int upDownAnimationStep = 200;
         private GMapOverlay tracksMarkersOverlay;
@@ -35,14 +34,13 @@ namespace TracksHeatmap
             this.tracksOptimiserOptions = tracksOptimiserOptions;
         }
 
-        public List<Fix> InitAnimation(GMapControl gMap, List<Geo.Gps.Track> tracks, int upDownAnimationStep, bool drawMarkers, bool increasePointsDensity)
+        public List<Waypoint> InitAnimation(GMapControl gMap, List<Geo.Gps.Track> tracks, int upDownAnimationStep, bool drawMarkers, bool increasePointsDensity)
         {
             this.upDownAnimationStep = upDownAnimationStep;
             outImagesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TracksAnimator";
             if (!Directory.Exists(outImagesFolder))
                 Directory.CreateDirectory(outImagesFolder);
             imageStep = 0;
-            lastPoint = null;
 
             tracksMarkersOverlay = FindOverlay(Constants.TracksMarkers, gMap);
             if (tracksMarkersOverlay == null)
@@ -51,11 +49,11 @@ namespace TracksHeatmap
                 gMap.Overlays.Add(tracksMarkersOverlay);
             }
 
-            List<Fix> fixes = new List<Fix>();
+            List<Waypoint> fixes = new List<Waypoint>();
 
             track = tracks[0];
-            fixes.Add(track.GetFirstFix());
-            fixes.Add(track.GetLastFix());
+            fixes.Add(track.GetFirstWaypoint());
+            fixes.Add(track.GetLastWaypoint());
 
             TracksOptimiser tracksOptimiser = new TracksOptimiser();
             if (increasePointsDensity)
@@ -142,8 +140,8 @@ namespace TracksHeatmap
             {
                 var point = route.Points[pointIndex];
 
-                Geo.Coordinate point1 = new Fix(lastPointLatLng.Lat, lastPointLatLng.Lng, DateTime.Now).Coordinate;
-                Geo.Coordinate point2 = new Fix(point.Lat, point.Lng, DateTime.Now).Coordinate;
+                Geo.Coordinate point1 = new Waypoint(lastPointLatLng.Lat, lastPointLatLng.Lng).Coordinate;
+                Geo.Coordinate point2 = new Waypoint(point.Lat, point.Lng).Coordinate;
 
                 if (!lastPointLatLng.IsEmpty && Math.Abs(spheroidCalculator.CalculateLength(new Geo.CoordinateSequence(point1, point2)).SiValue) < upDownAnimationStep)
                 {
