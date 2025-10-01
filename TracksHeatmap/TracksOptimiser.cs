@@ -56,8 +56,8 @@ namespace TracksHeatmap
 
             foreach (var track in tracks)
             {
-                Geo.Gps.Fix lastPoint = track.GetFirstFix();
-                string tagName = lastPoint.TimeUtc.ToShortDateString() + " " + lastPoint.TimeUtc.ToShortTimeString();
+                Geo.Gps.Waypoint lastPoint = track.GetFirstWaypoint();
+                string tagName = lastPoint.TimeUtc.ToString() + " " + lastPoint.TimeUtc.ToString();
                 if (track.Metadata.ContainsKey("name"))
                 {
                     tagName += "; " + track.Metadata["name"].ToString();
@@ -71,10 +71,10 @@ namespace TracksHeatmap
                 foreach (var segment in track.Segments)
                 {
                     List<PointLatLng> mapPoints = new List<PointLatLng>();
-                    lastPoint = segment.GetFirstFix();
+                    lastPoint = segment.GetFirstWaypoint();
                     mapPoints.Add(new PointLatLng(lastPoint.Coordinate.Latitude, lastPoint.Coordinate.Longitude));
 
-                    foreach (var point in segment.Fixes)
+                    foreach (var point in segment.Waypoints)
                     {
                         if (AddPoint(mapPoints, lastPoint, point, minimimDistance, tagName))
                         {
@@ -86,9 +86,9 @@ namespace TracksHeatmap
                     }
 
                     // always add last point, single gpx file may be divided by tracks
-                    if (segment.GetLastFix() != lastPoint)
+                    if (segment.GetLastWaypoint() != lastPoint)
                     {
-                        Geo.Gps.Fix newPoint = segment.GetLastFix();
+                        Geo.Gps.Waypoint newPoint = segment.GetLastWaypoint();
                         mapPoints.Add(new PointLatLng(newPoint.Coordinate.Latitude, newPoint.Coordinate.Longitude));
                     }
 
@@ -106,7 +106,7 @@ namespace TracksHeatmap
             gMap.Refresh();
         }
 
-        private bool AddPoint(List<PointLatLng> mapPoints, Geo.Gps.Fix lastPoint, Geo.Gps.Fix newPoint, double minimimDistance, string tagName)
+        private bool AddPoint(List<PointLatLng> mapPoints, Geo.Gps.Waypoint lastPoint, Geo.Gps.Waypoint newPoint, double minimimDistance, string tagName)
         {
             double distance = GetDistance(lastPoint.Coordinate.Latitude, lastPoint.Coordinate.Longitude, newPoint.Coordinate.Latitude, newPoint.Coordinate.Longitude);
             if (options.DisconnectGapPoints && distance >= options.DisconnectTrackGapsMultiple * minimimDistance)

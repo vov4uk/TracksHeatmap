@@ -170,10 +170,10 @@ namespace TracksHeatmap
                     {
                         foreach (var segment in track.Segments)
                         {
-                            for (int idx = segment.Fixes.Count - 1; idx >= 0; idx--)
+                            for (int idx = segment.Waypoints.Count - 1; idx >= 0; idx--)
                             {
-                                if (segment.Fixes[idx].Coordinate.Latitude >= ViewArea.Bottom && segment.Fixes[idx].Coordinate.Latitude <= ViewArea.Top
-                                    && segment.Fixes[idx].Coordinate.Longitude >= ViewArea.Left && segment.Fixes[idx].Coordinate.Longitude <= ViewArea.Right)
+                                if (segment.Waypoints[idx].Coordinate.Latitude >= ViewArea.Bottom && segment.Waypoints[idx].Coordinate.Latitude <= ViewArea.Top
+                                    && segment.Waypoints[idx].Coordinate.Longitude >= ViewArea.Left && segment.Waypoints[idx].Coordinate.Longitude <= ViewArea.Right)
                                 {
                                     isAnyPointOnMap = true;
                                     break;
@@ -191,9 +191,9 @@ namespace TracksHeatmap
                     {
                         foreach (var segment in track.Segments)
                         {
-                            for (int idx = segment.Fixes.Count - 1; idx >= 0; idx--)
+                            for (int idx = segment.Waypoints.Count - 1; idx >= 0; idx--)
                             {
-                                if (segment.Fixes[idx].TimeUtc.Date >= dtFrom.Value && segment.Fixes[idx].TimeUtc.Date <= dtTo.Value)
+                                if (segment.Waypoints[idx].TimeUtc.Value.Date >= dtFrom.Value && segment.Waypoints[idx].TimeUtc.Value.Date <= dtTo.Value)
                                 {
                                     betweenAnyDates = true;
                                     break;
@@ -208,9 +208,9 @@ namespace TracksHeatmap
 
                     if (isAnyPointOnMap && betweenAnyDates)
                     {
-                        Geo.Gps.Fix firstPoint = track.GetFirstFix();
-                        if (firstPoint.TimeUtc < minTrackDate) minTrackDate = firstPoint.TimeUtc;
-                        if (firstPoint.TimeUtc > maxTrackDate) maxTrackDate = firstPoint.TimeUtc;
+                        Geo.Gps.Waypoint firstPoint = track.GetFirstWaypoint();
+                        if (firstPoint.TimeUtc < minTrackDate) minTrackDate = firstPoint.TimeUtc.Value;
+                        if (firstPoint.TimeUtc > maxTrackDate) maxTrackDate = firstPoint.TimeUtc.Value;
 
                         this.TotalDistance += track.GetLength().Value;
                         this.TotalTime += track.GetDuration();
