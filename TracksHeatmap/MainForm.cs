@@ -3,7 +3,6 @@ using Geo.Gps;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
-using System.Configuration;
 using System.Data;
 
 namespace TracksHeatmap
@@ -17,23 +16,6 @@ namespace TracksHeatmap
         public MainForm()
         {
             InitializeComponent();
-
-
-            //var section = ConfigurationManager.GetSection("System.Windows.Forms.ApplicationConfigurationSection") as NameValueCollection;
-            //var value = section["DpiAwareness"];
-
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-            // Get the appSettings section.
-            //AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("System.Windows.Forms.ApplicationSettingsSection");
-            //var dpiAware = appSettings.Settings["DpiAwareness"].Value;
-
-            //lblDpiAware.Text = "Dpi awareness: " + dpiAware;
-
-            //appSettings.Settings["DpiAwareness"].Value = "PerMonitorV2";
-            //appSettings.Settings["DpiAwareness"].Value = "unaware";
-            //config.Save();
-
 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -447,19 +429,6 @@ namespace TracksHeatmap
             List<Waypoint> fixes = tracksAnimator.InitAnimation(this.gMap, this.Tracks, Convert.ToInt32(this.upDownAnimationStep.Value), chkAnimationDrawMarkers.Checked, chkIncreasePointsDensity.Checked);
 
             timerAnimation.Enabled = true;
-        }
-
-        private void cmbDpiAwareness_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-            // Get the appSettings section.
-            AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("System.Windows.Forms.ApplicationConfigurationSection");
-            var dpiAware = appSettings.Settings["DpiAwareness"].Value;
-
-            appSettings.Settings["DpiAwareness"].Value = cmbDpiAwareness.SelectedItem.ToString();
-
-            config.Save();
         }
     }
 }
