@@ -39,7 +39,6 @@
             this.zoomLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblMapPoints = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblSelectedRoute = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblDpiAware = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.btnZoomOut = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -88,9 +87,6 @@
             this.btnMoreStats = new System.Windows.Forms.Button();
             this.txtInfo = new System.Windows.Forms.TextBox();
             this.tabPageTools = new System.Windows.Forms.TabPage();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cmbDpiAwareness = new System.Windows.Forms.ComboBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.chkAnimationDrawMarkers = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -126,7 +122,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numTrackWidth)).BeginInit();
             this.tabPageStats.SuspendLayout();
             this.tabPageTools.SuspendLayout();
-            this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upDownAnimationStep)).BeginInit();
             this.SuspendLayout();
@@ -206,8 +201,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.zoomLabel,
             this.lblMapPoints,
-            this.lblSelectedRoute,
-            this.lblDpiAware});
+            this.lblSelectedRoute});
             this.statusStrip1.Location = new System.Drawing.Point(0, 1150);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
@@ -236,12 +230,7 @@
             this.lblSelectedRoute.Name = "lblSelectedRoute";
             this.lblSelectedRoute.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
             this.lblSelectedRoute.Size = new System.Drawing.Size(20, 32);
-            // 
-            // lblDpiAware
-            // 
-            this.lblDpiAware.Name = "lblDpiAware";
-            this.lblDpiAware.Size = new System.Drawing.Size(118, 32);
-            this.lblDpiAware.Text = "dpi aware";
+
             // 
             // btnZoomIn
             // 
@@ -918,7 +907,6 @@
             // 
             // tabPageTools
             // 
-            this.tabPageTools.Controls.Add(this.groupBox9);
             this.tabPageTools.Controls.Add(this.groupBox8);
             this.tabPageTools.Controls.Add(this.btnSaveAllAsOne);
             this.tabPageTools.Location = new System.Drawing.Point(8, 39);
@@ -927,43 +915,7 @@
             this.tabPageTools.TabIndex = 3;
             this.tabPageTools.Text = "Tools";
             this.tabPageTools.UseVisualStyleBackColor = true;
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox9.Controls.Add(this.label11);
-            this.groupBox9.Controls.Add(this.cmbDpiAwareness);
-            this.groupBox9.Location = new System.Drawing.Point(16, 419);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(401, 144);
-            this.groupBox9.TabIndex = 2;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Dpi awareness";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(11, 98);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(274, 25);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "Change and restart the app";
-            // 
-            // cmbDpiAwareness
-            // 
-            this.cmbDpiAwareness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbDpiAwareness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDpiAwareness.FormattingEnabled = true;
-            this.cmbDpiAwareness.Items.AddRange(new object[] {
-            "PerMonitorV2",
-            "unaware"});
-            this.cmbDpiAwareness.Location = new System.Drawing.Point(16, 45);
-            this.cmbDpiAwareness.Name = "cmbDpiAwareness";
-            this.cmbDpiAwareness.Size = new System.Drawing.Size(288, 33);
-            this.cmbDpiAwareness.TabIndex = 0;
-            this.cmbDpiAwareness.SelectedIndexChanged += new System.EventHandler(this.cmbDpiAwareness_SelectedIndexChanged);
+
             // 
             // groupBox8
             // 
@@ -1125,8 +1077,6 @@
             this.tabPageStats.ResumeLayout(false);
             this.tabPageStats.PerformLayout();
             this.tabPageTools.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.upDownAnimationStep)).EndInit();
@@ -1202,10 +1152,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.NumericUpDown upDownAnimationStep;
         private System.Windows.Forms.CheckBox chkAnimationDrawMarkers;
-        private System.Windows.Forms.ToolStripStatusLabel lblDpiAware;
-        private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox cmbDpiAwareness;
+
         private System.Windows.Forms.CheckBox chkIncreasePointsDensity;
     }
 }
