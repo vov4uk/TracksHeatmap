@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            //System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+           //System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            //System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageTracksBrowser = new System.Windows.Forms.TabPage();
             this.tableLayoutTracksBrowser = new System.Windows.Forms.TableLayoutPanel();
@@ -51,7 +51,7 @@
             this.cmbActivityRange = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblActivityStatsTitle = new System.Windows.Forms.Label();
-            this.chartActivityStats = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            //this.chartActivityStats = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
             this.tabPageTracksBrowser.SuspendLayout();
             this.tableLayoutTracksBrowser.SuspendLayout();
@@ -64,7 +64,7 @@
             this.tabPageActivityStats.SuspendLayout();
             this.tableLayoutActivityStats.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartActivityStats)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.chartActivityStats)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -283,7 +283,7 @@
             this.tableLayoutActivityStats.ColumnCount = 1;
             this.tableLayoutActivityStats.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutActivityStats.Controls.Add(this.panel2, 0, 0);
-            this.tableLayoutActivityStats.Controls.Add(this.chartActivityStats, 0, 1);
+            //this.tableLayoutActivityStats.Controls.Add(this.chartActivityStats, 0, 1);
             this.tableLayoutActivityStats.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutActivityStats.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutActivityStats.Name = "tableLayoutActivityStats";
@@ -323,20 +323,20 @@
             // 
             // chartActivityStats
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartActivityStats.ChartAreas.Add(chartArea1);
-            this.chartActivityStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chartActivityStats.Legends.Add(legend1);
-            this.chartActivityStats.Location = new System.Drawing.Point(3, 35);
-            this.chartActivityStats.Name = "chartActivityStats";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartActivityStats.Series.Add(series1);
-            this.chartActivityStats.Size = new System.Drawing.Size(1148, 481);
-            this.chartActivityStats.TabIndex = 2;
-            this.chartActivityStats.Text = "chart1";
+            //chartArea1.Name = "ChartArea1";
+            //this.chartActivityStats.ChartAreas.Add(chartArea1);
+            //this.chartActivityStats.Dock = System.Windows.Forms.DockStyle.Fill;
+            //legend1.Name = "Legend1";
+            //this.chartActivityStats.Legends.Add(legend1);
+            //this.chartActivityStats.Location = new System.Drawing.Point(3, 35);
+            //this.chartActivityStats.Name = "chartActivityStats";
+            //series1.ChartArea = "ChartArea1";
+            //series1.Legend = "Legend1";
+            //series1.Name = "Series1";
+            //this.chartActivityStats.Series.Add(series1);
+            //this.chartActivityStats.Size = new System.Drawing.Size(1148, 481);
+            //this.chartActivityStats.TabIndex = 2;
+            //this.chartActivityStats.Text = "chart1";
             // 
             // StatsForm
             // 
@@ -364,7 +364,7 @@
             this.tableLayoutActivityStats.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartActivityStats)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.chartActivityStats)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,6 +392,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblActivityStatsTitle;
         private System.Windows.Forms.ComboBox cmbActivityRange;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartActivityStats;
+        //private System.Windows.Forms.DataVisualization.Charting.Chart chartActivityStats;
     }
 }

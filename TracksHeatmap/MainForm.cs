@@ -1,25 +1,10 @@
 ﻿using Geo.Geodesy;
 using Geo.Gps;
-using Geo.Gps.Metadata;
-using Geo.Gps.Serialization;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
-using GMap.NET.WindowsForms.Markers;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Configuration;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace TracksHeatmap
 {
@@ -40,10 +25,10 @@ namespace TracksHeatmap
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             // Get the appSettings section.
-            AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("System.Windows.Forms.ApplicationConfigurationSection");
-            var dpiAware = appSettings.Settings["DpiAwareness"].Value;
+            //AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("System.Windows.Forms.ApplicationSettingsSection");
+            //var dpiAware = appSettings.Settings["DpiAwareness"].Value;
 
-            lblDpiAware.Text = "Dpi awareness: " + dpiAware;
+            //lblDpiAware.Text = "Dpi awareness: " + dpiAware;
 
             //appSettings.Settings["DpiAwareness"].Value = "PerMonitorV2";
             //appSettings.Settings["DpiAwareness"].Value = "unaware";
@@ -108,7 +93,7 @@ namespace TracksHeatmap
             chkAsVisible.Checked = true;
             menuTrackName.Visible = false;
 
-            cmbMapType.SelectedIndex = mapTypes.IndexOf(GMapProviders.CzechMap);
+            cmbMapType.SelectedIndex = mapTypes.IndexOf(GMapProviders.OpenStreetMap);
 
             gMap.DragButton = MouseButtons.Left;
             gMap.Position = new PointLatLng(50.059721, 22.4930113);
