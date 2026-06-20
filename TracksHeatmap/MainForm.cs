@@ -25,22 +25,14 @@ namespace TracksHeatmap
 
             mapTypes.Add(GMapProviders.ArcGIS_World_Topo_Map);
             mapTypes.Add(GMapProviders.ArcGIS_World_Street_Map);
-            mapTypes.Add(GMapProviders.ArcGIS_StreetMap_World_2D_Map);
             mapTypes.Add(GMapProviders.BingMap);
             mapTypes.Add(GMapProviders.GoogleMap);
             mapTypes.Add(GMapProviders.GoogleHybridMap);
             mapTypes.Add(GMapProviders.GoogleTerrainMap);
             mapTypes.Add(GMapProviders.GoogleSatelliteMap);
-            mapTypes.Add(GMapProviders.CzechMap);
-            mapTypes.Add(GMapProviders.CzechTuristMap);
             mapTypes.Add(GMapProviders.OpenCycleMap);
             mapTypes.Add(GMapProviders.OpenCycleTransportMap);
             mapTypes.Add(GMapProviders.OpenCycleLandscapeMap);
-            mapTypes.Add(GMapProviders.OpenStreet4UMap);
-            mapTypes.Add(GMapProviders.OpenStreetMap);
-            mapTypes.Add(GMapProviders.OpenStreetMapGraphHopper);
-            mapTypes.Add(GMapProviders.YandexMap);
-            mapTypes.Add(GMapProviders.WikiMapiaMap);
             mapTypes.Add(GMapProviders.UMPMap);
 
             foreach (GMapProvider mapType in mapTypes)
@@ -63,9 +55,6 @@ namespace TracksHeatmap
 
         private string GetMapName(GMapProvider mapType)
         {
-            if (mapType == GMapProviders.CzechMap) return "Mapy.cz";
-            else if (mapType == GMapProviders.CzechTuristMap) return "Mapy.cz turist";
-
             return mapType.ToString();
         }
 
@@ -75,7 +64,7 @@ namespace TracksHeatmap
             chkAsVisible.Checked = true;
             menuTrackName.Visible = false;
 
-            cmbMapType.SelectedIndex = mapTypes.IndexOf(GMapProviders.OpenStreetMap);
+            cmbMapType.SelectedIndex = mapTypes.IndexOf(GMapProviders.GoogleHybridMap);
 
             gMap.DragButton = MouseButtons.Left;
             gMap.Position = new PointLatLng(50.059721, 22.4930113);

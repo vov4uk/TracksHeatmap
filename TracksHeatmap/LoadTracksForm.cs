@@ -199,6 +199,10 @@ namespace TracksHeatmap
                     if (isAnyPointOnMap && betweenAnyDates)
                     {
                         Geo.Gps.Waypoint firstPoint = track.GetFirstWaypoint();
+                        if (firstPoint is null)
+                        {
+                            continue;
+                        }
                         if (firstPoint.TimeUtc < minTrackDate) minTrackDate = firstPoint.TimeUtc.Value;
                         if (firstPoint.TimeUtc > maxTrackDate) maxTrackDate = firstPoint.TimeUtc.Value;
 
