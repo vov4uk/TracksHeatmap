@@ -8,6 +8,8 @@ namespace TracksHeatmap
 {
     public partial class LoadTracksForm : Form
     {
+        private static readonly HashSet<string> SupportedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { ".gpx", ".tcx", ".fit" };
+
         private string[] filenames;
         private DateTime minTrackDate = DateTime.MaxValue;
         private DateTime maxTrackDate = DateTime.MinValue;
@@ -59,7 +61,9 @@ namespace TracksHeatmap
         {
             try
             {
-                this.filenames = Directory.GetFiles(selectedPath, "*.gpx");
+                this.filenames = Directory.EnumerateFiles(selectedPath, "*.*", SearchOption.AllDirectories)
+                    .Where(path => SupportedExtensions.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase))
+                    .ToArray();
                 lblFolderOrFiles.Text = "Files found: " + this.filenames.Length.ToString() + "; " + selectedPath;
             }
             catch (Exception ex)
@@ -70,13 +74,14 @@ namespace TracksHeatmap
 
         private void btnLoadFiles_Click(object sender, EventArgs e)
         {
-            OpenFileDialog selectFilesDialog = new OpenFileDialog();
-
-            selectFilesDialog.Filter = "gpx files (*.gpx)|*.gpx";
-            selectFilesDialog.FilterIndex = 0;
-            selectFilesDialog.RestoreDirectory = true;
-            selectFilesDialog.Multiselect = true;
-            selectFilesDialog.Title = "Please select files";
+            OpenFileDialog selectFilesDialog = new OpenFileDialog
+            {
+                Filter = "GPS track files (*.gpx;*.tcx;*.fit)|*.gpx;*.tcx;*.fit|GPX files (*.gpx)|*.gpx|TCX files (*.tcx)|*.tcx|FIT files (*.fit)|*.fit",
+                FilterIndex = 0,
+                RestoreDirectory = true,
+                Multiselect = true,
+                Title = "Please select files"
+            };
 
             if (selectFilesDialog.ShowDialog() == DialogResult.OK)
             {
@@ -126,24 +131,7 @@ namespace TracksHeatmap
                 if (chkFilenameMustContain.Checked && !(new FileInfo(path).Name.Contains(txtMustContain.Text)))
                     continue;
 
-                List<Geo.Gps.Track> tracks = null;
-
-                var gpx10 = new Gpx10Serializer();
-                var gpx11 = new Gpx11Serializer();
-                using (var stream = new FileStream(path, FileMode.Open))
-                {
-                    var streamWrapper = new StreamWrapper(stream);
-                    if (gpx10.CanDeSerialize(streamWrapper))
-                    {
-                        var data = gpx10.DeSerialize(streamWrapper);
-                        tracks = data.Tracks;
-                    }
-                    else if (gpx11.CanDeSerialize(streamWrapper))
-                    {
-                        var data = gpx11.DeSerialize(streamWrapper);
-                        tracks = data.Tracks;
-                    }
-                }
+                List<Geo.Gps.Track> tracks = LoadTracksFromFile(path);
 
                 foreach (var track in tracks)
                 {
@@ -223,6 +211,44 @@ namespace TracksHeatmap
             }
 
             ((BackgroundWorker)sender).ReportProgress(100);
+        }
+
+        private static List<Geo.Gps.Track> LoadTracksFromFile(string path)
+        {
+            try
+            {
+                string extension = Path.GetExtension(path);
+                using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+
+                if (extension.Equals(".tcx", StringComparison.OrdinalIgnoreCase))
+                {
+                    return TcxReader.Read(stream);
+                }
+
+                if (extension.Equals(".fit", StringComparison.OrdinalIgnoreCase))
+                {
+                    return FitReader.Read(stream);
+                }
+
+                var streamWrapper = new StreamWrapper(stream);
+                var gpx10 = new Gpx10Serializer();
+                if (gpx10.CanDeSerialize(streamWrapper))
+                {
+                    return gpx10.DeSerialize(streamWrapper).Tracks;
+                }
+
+                var gpx11 = new Gpx11Serializer();
+                if (gpx11.CanDeSerialize(streamWrapper))
+                {
+                    return gpx11.DeSerialize(streamWrapper).Tracks;
+                }
+            }
+            catch
+            {
+                // File is not a valid/supported track file (or contains no track data) - skip it.
+            }
+
+            return new List<Geo.Gps.Track>();
         }
 
         public string GetInfo()
